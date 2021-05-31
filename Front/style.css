@@ -1,0 +1,31 @@
+:root{
+    --mycolor-primary:#f4e9f1;
+    --mycolor-secondary:#c8795c;
+}
+.mycolor-primary{
+    color:var(--mycolor-primary);
+
+}
+.mycolor-secondary{
+    color:var(--mycolor-secondary);
+}
+
+.mybg-primary{
+    background:var(--mycolor-primary);
+}
+.mybg-secondary{
+    background:var(--mycolor-secondary);
+}
+.svg-inline--fa{
+    color:var(--mycolor-secondary);
+    width: 2rem;
+    height: 2rem;
+}
+
+.btn-size{
+    height: 4rem;
+    width: 4rem;
+}
+.img-basket{
+    width: 7rem;
+}
