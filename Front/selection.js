@@ -1,30 +1,31 @@
 /******************************************** Page de personnalisation produit sekectionné ******************************************************/
-
-
-// get id for URL
-
-//const idOfSelection = window.location.search.slice(4);
+// recuperation de l'id a partir de l'url
 
 const idOfSelection =  new URLSearchParams(window.location.search).get("id")
 
-// get a teedie by id in URL
+// recupuration du produit par son id
 
 const getTeddyById = () => {
+
       return fetch (` http://localhost:3000/api/teddies/${idOfSelection}`)
         .then(response => response.json())
         .catch(function (error) {
             alert("Une erreur s'est produite: " + error)
         })
 }
-
+const displayTitleNoSelection = ()=>{
+    document.getElementById("js-title-no-selection").classList.add("displayTitle")
+}
 getTeddyById().then(teddySelection =>{
-    if(idOfSelection !== ""){
+    if(idOfSelection !== null){
         displayTeddy(teddySelection);
         displayOption(teddySelection);
         getColorsOption();
         addBasket(teddySelection);
+
     }else{
         alert ("selectionnez un article de la page d'acceuil");
+
     }
 
 })
@@ -33,38 +34,15 @@ getTeddyById().then(teddySelection =>{
 const  displayTeddy =  (teddySelection) =>{
 
     const priceEuro = (new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR'}).format(teddySelection.price/100));
-   document.getElementById('main-selection').innerHTML =
-        `  <h1 class="h3 mb-4 mt-4">Personnalisez votre sélection</h1>
-                <div class="col-12 col-lg-6 mx-auto">
-                        <div class="card  mb-3 ">
-                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                                <img
-                                           src="${teddySelection.imageUrl}"
-                                           class="img-fluid "
-                                           alt="image du produit"
-                                />
-                                <a href="#">
-                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                                </a>
-                            </div>
-                            <div class="card-body">
-                                   <h5 class="card-title">${teddySelection.name}</h5>
-                                   <p class="card-text">
-                                   <small class="text-muted">${priceEuro}</small>
-                                   </p>
-                                <form class="input-group mb-3">
-                                  <label class="input-group-text" for="inputGroupSelect01">Couleurs</label>
-                                  <select class="form-select"  id="inputGroupSelect01" required>
-                                    <option selected>Veuillez choisir votre couleur</option>                          
-                                  </select>
-                                </form>   
-                                <div class="d-grid col-4 mx-auto">
-                                    <a href="basket.html" id="add-basket" type="button" class="btn mybg-secondary">Ajouter au pannier</a>
-                               </div>     
-                            </div>
-                        </div>
-                    </div>`
-    document.getElementById('link-product-page').setAttribute("href", `selection.html?id=${teddySelection._id}`)
+    const templateSection = document.getElementById("teddy");
+    const cloneSection = document.importNode(templateSection.content, true);
+
+    cloneSection.getElementById("js-title—selection").textContent = teddySelection.name;
+    cloneSection.getElementById("js-price—selection").textContent = priceEuro;
+    cloneSection.getElementById("js-img—selection").setAttribute("src", teddySelection.imageUrl)
+    cloneSection.getElementById("js-add-basket").setAttribute("href", "selection.html?id=" + teddySelection._id)
+
+    document.getElementById("main-selection").appendChild(cloneSection);
 }
 
 
@@ -85,7 +63,7 @@ const getColorsOption = () => {
 // Ajouter produit au panier
 
 const addBasket = (teddySelection) => {
-    const linkAddBasket = document.getElementById("add-basket");
+    const linkAddBasket = document.getElementById("js-add-basket");
     linkAddBasket.addEventListener("click", function (event) {
         event.preventDefault()
         const productToBasket = teddySelection;

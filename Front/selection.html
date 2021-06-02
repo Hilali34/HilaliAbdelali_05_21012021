@@ -43,7 +43,42 @@
 </header>
 <!--------------------------------Content Page --Start ----------------------------------------->
 <main class="container " id="main-selection">
-  <h1 class="h3 mb-4 mt-4"> Retrouvez la liste des produits à seléctionner sur la page d'acceuil</h1>
+
+    <h1 id="js-title-no-selection" class="h3 mb-4 mt-4" > Retrouvez la liste des produits à seléctionner sur la page d'acceuil </h1>
+
+  <template id="teddy">
+    <h1 class="h3 mb-4 mt-4">Personnalisez votre sélection</h1>
+    <div class="col-12 col-lg-6 mx-auto">
+      <div class="card  mb-3 ">
+        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+          <img
+                  id="js-img—selection"
+                  src=""
+                  class="img-fluid "
+                  alt="image du produit"
+          />
+          <a href="#">
+            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+          </a>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title" id="js-title—selection"></h5>
+          <p class="card-text">
+            <small class="text-muted" id="js-price—selection"></small>
+          </p>
+          <form class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Couleurs</label>
+            <select class="form-select"  id="inputGroupSelect01" required>
+              <option selected>Veuillez choisir votre couleur</option>
+            </select>
+          </form>
+          <div class="d-grid col-4 mx-auto">
+            <a href="basket.html" id="js-add-basket" type="button" class="btn mybg-secondary">Ajouter au pannier</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
 </main>
 
 
