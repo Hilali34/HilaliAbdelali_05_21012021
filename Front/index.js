@@ -1,7 +1,7 @@
 /******************************************** Page d'acceuil ******************************************************/
 
 
-// this function get a teddies List
+// cette fonction recupère la liste des produit grace a l'API
 
 const getTeddiesList = () => {
       return fetch(" http://localhost:3000/api/teddies")
@@ -11,20 +11,20 @@ const getTeddiesList = () => {
             alert("Une erreur s'est produite: " + error)
         })
 }
-// ya t-il un autre moyen que de declarer un variable a l'exterieur pour recuperer la liste des produit?
-// diffrence avec ou sans un  addvent onload de la page?
 
+// affichage de la liste des produits apres chargement du dom
 
-
-// loop for teddies
-getTeddiesList().then(result => {
-        result.forEach(teddy => {   // quelle différnce si je rajoute un return? c'est quoi le différence entre forEach et le for OF
+document.addEventListener('DOMContentLoaded', () => {
+    getTeddiesList().then(result => {
+        result.forEach(teddy => {
             displayTeddies(teddy);
         })
     })
+});
 
 
-// function display teddies list (inject HTML)
+
+// cette fonction affiches la liste des produits
 
 const displayTeddies = (teddy) => {
     const priceEuro = (new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(teddy.price / 100));
