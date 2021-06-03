@@ -1,35 +1,45 @@
 /******************************************** Page de personnalisation produit sekectionné ******************************************************/
+
+
 // recuperation de l'id a partir de l'url
 
 const idOfSelection =  new URLSearchParams(window.location.search).get("id")
+
+
 
 // recupuration du produit par son id
 
 const getTeddyById = () => {
 
-      return fetch (` http://localhost:3000/api/teddies/${idOfSelection}`)
-        .then(response => response.json())
-        .catch(function (error) {
-            alert("Une erreur s'est produite: " + error)
-        })
-}
-const displayTitleNoSelection = ()=>{
-    document.getElementById("js-title-no-selection").classList.add("displayTitle")
-}
-getTeddyById().then(teddySelection =>{
-    if(idOfSelection !== null){
-        displayTeddy(teddySelection);
-        displayOption(teddySelection);
-        getColorsOption();
-        addBasket(teddySelection);
+        return fetch(` http://localhost:3000/api/teddies/${idOfSelection}`)
+            .then(response => response.json())
+            .catch(function (error) {
+                alert("Une erreur s'est produite: " + error)
+            })
 
-    }else{
-        alert ("selectionnez un article de la page d'acceuil");
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (idOfSelection !== null) {
+        getTeddyById().then(teddySelection => {
+
+            displayTeddy(teddySelection);
+            displayOption(teddySelection);
+            getColorsOption();
+            addBasket(teddySelection);
+            document.getElementById("js-display-title-selection").hidden = true;
+
+
+        })
+    } else {
+        alert("selectionnez un article de la page d'acceuil");
 
     }
-
 })
 
+
+
+// affichage de l'artcile selectionné
 
 const  displayTeddy =  (teddySelection) =>{
 
@@ -46,12 +56,24 @@ const  displayTeddy =  (teddySelection) =>{
 }
 
 
+
+// ajout des couleurs disponible dans les options
+
  const displayOption = (teddySelection) => {
     for (let i= 0; i <teddySelection.colors.length; i++) {
-        document.getElementById('inputGroupSelect01').innerHTML +=
-            ` <option id="colors" value="${teddySelection.colors[i]}" >${teddySelection.colors[i]}</option> `
+
+        const formColors = document.getElementById('inputGroupSelect01');
+        const optionsColors = document.createElement("option");
+
+        formColors.appendChild(optionsColors);
+        optionsColors.setAttribute("value",teddySelection.colors[i]);
+        optionsColors.textContent = teddySelection.colors[i];
     }
 }
+
+
+
+// recuperation de la couleur choisis par l'utilisateur
 
 const getColorsOption = () => {
 
@@ -60,7 +82,8 @@ const getColorsOption = () => {
 }
 
 
-// Ajouter produit au panier
+
+// Ajouter produit au panier via le local storage
 
 const addBasket = (teddySelection) => {
     const linkAddBasket = document.getElementById("js-add-basket");
