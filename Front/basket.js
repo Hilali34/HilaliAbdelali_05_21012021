@@ -1,45 +1,42 @@
 /********************************************    Panier    ******************************************************/
 
+//fonction : recuperation du contenu du local storage dans le pannier
 
 const getProductInLocalStorage = key => {
     let productInLocalStorage = JSON.parse(localStorage.getItem("product"));
+    for(let i = 0; i <productInLocalStorage.length; i++){
+        const reducer = (accumulator, currentValue) => accumulator + productInLocalStorage[i].quantity;
+        productInLocalStorage.reduce(reducer)
+
+    }
     localStorage.getItem("product", JSON.stringify(productInLocalStorage));
     return productInLocalStorage
 }
-getProductInLocalStorage();
 
+
+
+// fonction : affichage conetnu panier
 
 const displayBasket = () =>{
-    for(let i=0; i<getProductInLocalStorage().length; i++){
-    const priceEuro = (new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR'}).format(getProductInLocalStorage()[i].price/100));
-    document.getElementById('main-basket').innerHTML +=
-        `   
-        <div class="card mb-3" ;">
-          <div class="row g-0">
-            <div class="col-md-4">
-              <div class=" img-basket bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                                <img
-                                           src="${getProductInLocalStorage()[i].imageUrl}"
-                                           class="img-fluid "
-                                           alt="image du produit"
-                                />
-                                <a href="#">
-                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                                </a>
-                            </div>
-            </div>
-            <div class="col-md-8">
-              <div class="card-body">
-                <h5 class="card-title">${getProductInLocalStorage()[i].name}</h5>
-                <p class="card-text"><small class="text-muted">${priceEuro}</small></p>
-                <p class="card-text"><small class="text-muted">${getProductInLocalStorage()[i].colors}</small></p>
 
-              </div>
-            </div>
-          </div>
-        </div>
-        `
-    }
+        for(let i=0; i<getProductInLocalStorage().length; i++){
+
+            const priceEuro = (new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR'}).format(getProductInLocalStorage()[i].price/100));
+            const templateBasket = document.getElementById("teddy-in-basket");
+            const cloneSection = document.importNode(templateBasket.content, true);
+
+            cloneSection.getElementById("js-title—basket").textContent = getProductInLocalStorage()[i].name;
+            cloneSection.getElementById("js-price—basket").textContent = priceEuro;
+            cloneSection.getElementById("js-color-basket").textContent = getProductInLocalStorage()[i].colors;
+            cloneSection.getElementById("js-img—basket").setAttribute("src", getProductInLocalStorage()[i].imageUrl)
+            document.getElementById("main-basket").appendChild(cloneSection);
+        }
+
 }
 
-displayBasket()
+// recuperation et affichage du contenu panier apres chargement du dom
+
+document.addEventListener('DOMContentLoaded', () => {
+    getProductInLocalStorage();
+    displayBasket();
+})

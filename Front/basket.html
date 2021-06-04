@@ -42,11 +42,38 @@
 
 </header>
 <!--------------------------------Content Page --Start ----------------------------------------->
-<main class="container">
+<main class="container" id="main-basket">
     <h1 class="h3 mb-4 mt-4">Voici le contenu de votre panier</h1>
-    <div id="main-basket" class="row">
+    <template id="teddy-in-basket">
+        <div  class="row">
+            <div class="card mb-3" >
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <div class=" img-basket bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                        <img
+                                id="js-img—basket"
+                                src=""
+                                class="img-fluid "
+                                alt="image du produit"
+                        />
+                        <a href="#">
+                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title" id="js-title—basket"></h5>
+                        <p class="card-text"><small class="text-muted" id="js-color-basket"></small></p>
+                        <p class="card-text"><small class="text-muted" id="js-price—basket"></small></p>
 
-    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </template>
+
 
 </main>
 

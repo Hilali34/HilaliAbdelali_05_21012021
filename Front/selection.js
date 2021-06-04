@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 
-
 // affichage de l'artcile selectionné
 
 const  displayTeddy =  (teddySelection) =>{
@@ -94,15 +93,33 @@ const addBasket = (teddySelection) => {
         productToBasket.colors = getColorsOption();
         /*----------------------------------------local storag--------------------------------------------------*/
         let productInLocalStorage = JSON.parse(localStorage.getItem("product"))
+        let isPresent = false;
+        let i;
         if (productInLocalStorage) {
-            productInLocalStorage.push(productToBasket);
-            localStorage.setItem("product", JSON.stringify(productInLocalStorage));
+            for( i = 0; i <productInLocalStorage.length; i++){
+                const productIsEqual = productInLocalStorage[i].name === productToBasket.name && productInLocalStorage[i].colors === productToBasket.colors;
 
-        } else {
+                if (productIsEqual){
+                    console.log(productIsEqual)
+                    productInLocalStorage[i].quantity +=1;
+                    localStorage.setItem("product", JSON.stringify(productInLocalStorage));
+                    return isPresent = true;
+                }
+            }
+            if(!isPresent){
+                productInLocalStorage.push(productToBasket);
+                localStorage.setItem("product", JSON.stringify(productInLocalStorage));
+                i++
+            }
+
+        }else{
             productInLocalStorage = [];
             productInLocalStorage.push(productToBasket);
             localStorage.setItem("product", JSON.stringify(productInLocalStorage));
             console.log(productInLocalStorage);
         }
+
     })
+
 }
+
