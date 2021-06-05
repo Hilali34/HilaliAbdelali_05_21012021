@@ -45,6 +45,7 @@
 <main class="container" id="main-basket">
     <h1 class="h3 mb-4 mt-4">Voici le contenu de votre panier</h1>
     <template id="teddy-in-basket">
+
         <div  class="row">
             <div class="card mb-3" >
             <div class="row g-0">
@@ -63,10 +64,12 @@
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title" id="js-title—basket"></h5>
-                        <p class="card-text"><small class="text-muted" id="js-color-basket"></small></p>
-                        <p class="card-text"><small class="text-muted" id="js-price—basket"></small></p>
-
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item" ><h5 class="card-title" id="js-title—basket"></h5></li>
+                            <li class="list-group-item" id="js-color-basket"></li>
+                            <li class="list-group-item"id="js-quantity—basket"></li>
+                            <li class="list-group-item" id="js-price—basket"></li>
+                        </ul>
                     </div>
                 </div>
             </div>

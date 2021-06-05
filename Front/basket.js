@@ -26,8 +26,9 @@ const displayBasket = () =>{
             const cloneSection = document.importNode(templateBasket.content, true);
 
             cloneSection.getElementById("js-title—basket").textContent = getProductInLocalStorage()[i].name;
-            cloneSection.getElementById("js-price—basket").textContent = priceEuro;
-            cloneSection.getElementById("js-color-basket").textContent = getProductInLocalStorage()[i].colors;
+            cloneSection.getElementById("js-price—basket").textContent ="Prix: " + priceEuro;
+            cloneSection.getElementById("js-color-basket").textContent = "Couleur: " + getProductInLocalStorage()[i].colors;
+            cloneSection.getElementById("js-quantity—basket").textContent = "Quantité: " + getProductInLocalStorage()[i].quantity;
             cloneSection.getElementById("js-img—basket").setAttribute("src", getProductInLocalStorage()[i].imageUrl)
             document.getElementById("main-basket").appendChild(cloneSection);
         }
