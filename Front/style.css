@@ -16,10 +16,15 @@
 .mybg-secondary{
     background:var(--mycolor-secondary);
 }
-.svg-inline--fa{
+.fa-social{
     color:var(--mycolor-secondary);
     width: 2rem;
     height: 2rem;
+}
+.fa-basket{
+    color:var(--mycolor-secondary);
+    width: 1rem;
+    height: 1rem;
 }
 
 .btn-size{
