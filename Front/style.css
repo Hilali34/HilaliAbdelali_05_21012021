@@ -34,3 +34,7 @@
 .img-basket{
     width: 7rem;
 }
+
+.spacing-btn-modal{
+    justify-content: space-between;
+}

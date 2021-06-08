@@ -1,17 +1,17 @@
 /******************************************** Page de personnalisation produit sekectionné ******************************************************/
 
 
-// recuperation de l'id a partir de l'url
+// Récuperation de l'id a partir de l'url
 
 const idOfSelection =  new URLSearchParams(window.location.search).get("id")
 
 
 
-// recupuration du produit par son id
+// Récupuration du produit par son id
 
-const getTeddyById = () => {
+const getTeddyById = (id) => {
 
-        return fetch(` http://localhost:3000/api/teddies/${idOfSelection}`)
+        return fetch(` http://localhost:3000/api/teddies/${id}`)
             .then(response => response.json())
             .catch(function (error) {
                 alert("Une erreur s'est produite: " + error)
@@ -21,14 +21,12 @@ const getTeddyById = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     if (idOfSelection !== null) {
-        getTeddyById().then(teddySelection => {
-
+        getTeddyById(idOfSelection).then(teddySelection => {
             displayTeddy(teddySelection);
             displayOption(teddySelection);
             getColorsOption();
             addBasket(teddySelection);
             document.getElementById("js-display-title-selection").hidden = true;
-
 
         })
     } else {
@@ -38,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 
-// affichage de l'artcile selectionné
+// Affichage de l'article selectionné
 
 const  displayTeddy =  (teddySelection) =>{
 
@@ -56,7 +54,7 @@ const  displayTeddy =  (teddySelection) =>{
 
 
 
-// ajout des couleurs disponible dans les options
+// Ajout des couleurs disponibles dans les options
 
  const displayOption = (teddySelection) => {
     for (let i= 0; i <teddySelection.colors.length; i++) {
@@ -75,7 +73,6 @@ const  displayTeddy =  (teddySelection) =>{
 // recuperation de la couleur choisis par l'utilisateur
 
 const getColorsOption = () => {
-
     const color =document.getElementById("inputGroupSelect01");
     return color.value
 }

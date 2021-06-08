@@ -47,8 +47,13 @@
     <h1 id="js-display-title-selection" class="h3 mb-4 mt-4" > Retrouvez la liste des produits à seléctionner sur la page d'acceuil </h1>
 
   <template id="teddy">
+
+    <!-- Article selectionné -->
+
     <h1 class="h3 mb-4 mt-4">Personnalisez votre sélection</h1>
+
     <div class="col-12 col-lg-6 mx-auto">
+
       <div class="card  mb-3 ">
         <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
           <img
@@ -66,6 +71,9 @@
           <p class="card-text">
             <small class="text-muted" id="js-price—selection"></small>
           </p>
+
+          <!-- Options -->
+
           <form class="input-group mb-3">
             <label class="input-group-text" for="inputGroupSelect01">Couleurs</label>
             <select class="form-select"  id="inputGroupSelect01" required>
@@ -73,11 +81,34 @@
             </select>
           </form>
           <div class="d-grid col-4 mx-auto">
-            <a href="basket.html" id="js-add-basket" type="button" class="btn mybg-secondary">Ajouter au pannier</a>
+            <a href="basket.html" id="js-add-basket" type="button" class="btn mybg-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajouter au pannier</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Votre article a bien été ajouté au panier </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Voulez vous accedez au:
+          </div>
+          <div class="modal-footer spacing-btn-modal">
+            <a href="index.html" type="button" class="btn mybg-secondary " >Articles </a>
+            <a href="basket.html" type="button" class="btn mybg-secondary me-3">Panier</a>
           </div>
         </div>
       </div>
     </div>
+
   </template>
 </main>
 
