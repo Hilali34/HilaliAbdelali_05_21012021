@@ -60,11 +60,11 @@ const  displayTeddy =  (teddySelection) =>{
     for (let i= 0; i <teddySelection.colors.length; i++) {
 
         const formColors = document.getElementById('inputGroupSelect01');
-        const optionsColors = document.createElement("option");
+        const optionColors = document.createElement("option");
 
-        formColors.appendChild(optionsColors);
-        optionsColors.setAttribute("value",teddySelection.colors[i]);
-        optionsColors.textContent = teddySelection.colors[i];
+        formColors.appendChild(optionColors);
+        optionColors.setAttribute("value",teddySelection.colors[i]);
+        optionColors.textContent = teddySelection.colors[i];
     }
 }
 
@@ -85,38 +85,47 @@ const addBasket = (teddySelection) => {
     const linkAddBasket = document.getElementById("js-add-basket");
     linkAddBasket.addEventListener("click", function (event) {
         event.preventDefault()
-        const productToBasket = teddySelection;
-        productToBasket.quantity = 1;
-        productToBasket.colors = getColorsOption();
-        /*----------------------------------------local storag--------------------------------------------------*/
-        let productInLocalStorage = JSON.parse(localStorage.getItem("product"))
-        let isPresent = false;
-        let i;
-        if (productInLocalStorage) {
-            for( i = 0; i <productInLocalStorage.length; i++){
-                const productIsEqual = productInLocalStorage[i].name === productToBasket.name && productInLocalStorage[i].colors === productToBasket.colors;
-
-                if (productIsEqual){
-                    console.log(productIsEqual)
-                    productInLocalStorage[i].quantity +=1;
-                    localStorage.setItem("product", JSON.stringify(productInLocalStorage));
-                    return isPresent = true;
-                }
-            }
-            if(!isPresent){
-                productInLocalStorage.push(productToBasket);
-                localStorage.setItem("product", JSON.stringify(productInLocalStorage));
-                i++
-            }
-
-        }else{
-            productInLocalStorage = [];
-            productInLocalStorage.push(productToBasket);
-            localStorage.setItem("product", JSON.stringify(productInLocalStorage));
-            console.log(productInLocalStorage);
+        const productToAddToBasket = {
+            id: teddySelection._id,
+            selectedColor: getColorsOption(),
+            quantity: 1,
+            object: teddySelection,
         }
+
+        /*----------------------------------------local storag--------------------------------------------------*/
+        let basket = JSON.parse(localStorage.getItem("product"))
+
+        // verification s'il ya des produits dans le panier
+        if (basket) {
+
+                // verification si le produits que le client ajout est deja preesent dans le panier
+
+                const existingEntry = basket.find(e => e.id === productToAddToBasket.id && e.selectedColor === productToAddToBasket.selectedColor);
+
+                // ajout produit
+
+                if (!existingEntry) {
+                    basket.push(productToAddToBasket);
+                    localStorage.setItem("product", JSON.stringify(basket));
+                    console.log(basket)
+
+                } else {
+                    console.log(existingEntry.quantity)
+                    existingEntry.quantity++;
+                    localStorage.setItem("product", JSON.stringify(basket));
+                    console.log(basket)
+
+                }
+
+            // augmentation de la quantité
+
+        } else {
+            const initialStorageValue = [ productToAddToBasket ]
+            localStorage.setItem("product", JSON.stringify(initialStorageValue));
+            console.log(basket);
+        }
+
 
     })
 
 }
-
