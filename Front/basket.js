@@ -16,27 +16,6 @@ const getProductInLocalStorage = () => {
 
 
 // fonction : calcul du total des articles ajoutés au panier
-/*
-const calcTotalTeddies = ()=> {
-    const totalQuantity = [];
-    document.querySelector(".js-input-quantity").addEventListener('change', (e) => {
-        //const inputQuantity = parseInt(e.target.value, 10);
-            totalQuantity.push(e.target.value)
-        const reducer = (accumulator, currentValue) => accumulator + currentValue;
-        /*return totalQuantity.reduce((accumulator, currentValue) => {
-
-            return document.getElementById("js-total-articles-basket").textContent = (accumulator + currentValue);
-
-        }, 0)
-
-
-        return totalQuantity.reduce(reducer);
-
-    })
-    console.log(totalQuantity)
-}
-
-*/
 
 const calcTotalTeddies = ()=>{
     const totalQuantity =[];
@@ -54,26 +33,21 @@ const calcTotalTeddies = ()=>{
 
 
 
-
 // fonction : calcul du prix total des articles ajoutés au panier
 
-const totalPrice = ()=> {
-    const CalcTotalPrice = () => {
-        const prices = [];
-        const input = document.querySelector(".js-input-quantity");
-
-        for (let i = 0; i < getProductInLocalStorage().length; i++) {
-            const price = (getProductInLocalStorage()[i].object.price *  input.value) /100;
-            prices.push(price)
-        }
-        return prices.reduce((accumulator, currentValue) => {
-            return accumulator + currentValue;
-        }, 0)
-
+const calcTotalPrice = ()=>{
+    const totalPrice =[];
+    for(let i=0; i<getProductInLocalStorage().length; i++) {
+        const  productPrice = ((getProductInLocalStorage()[i].object.price) * (getProductInLocalStorage()[i].quantity));
+        console.log(productPrice)
+        totalPrice.push(productPrice)
     }
-   return  (new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR'}).format(CalcTotalPrice()));
-}
+    console.log(totalPrice)
+    return  totalPrice.reduce((accumulator,currentValue)=>{
+        return accumulator + currentValue;
+    },0)
 
+}
 
 
 // fonction : affichage du contenu panier
@@ -139,18 +113,22 @@ const displayBasket = () => {
         document.getElementById("main-basket").appendChild(cloneSection);
     }
 
-    // affichage prix total des nbr total d'articles
+// affichage prix total des nbr total d'articles
+
+const totalPriceInEuro = (new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'})
+        .format((calcTotalPrice()) / 100));
 
 document.getElementById("js-total-articles-basket").textContent = calcTotalTeddies();
-document.getElementById("js-total-price-basket").textContent = totalPrice();
+document.getElementById("js-total-price-basket").textContent = totalPriceInEuro;
 }
+
 
 // recuperation et affichage du contenu panier apres chargement du dom
 
 document.addEventListener('DOMContentLoaded', () => {
 getProductInLocalStorage();
 displayBasket();
-totalPrice();
+calcTotalPrice();
 })
 
 
