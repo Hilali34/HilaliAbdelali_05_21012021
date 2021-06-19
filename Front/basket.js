@@ -6,13 +6,18 @@ const getProductInLocalStorage = () => {
     return JSON.parse(localStorage.getItem("product"));
 }
 
-/*const foo = () => {
+/*
     const products = getProductInLocalStorage();
-    const newBasket = products.filter(p => p.id != 'toto');
+    const idProductToTrash = document.querySelector("remove-btn").value;
+    console.log(idProductToTrash)
+    const newBasket = products.filter(p => p.id != idProductToTrash);
     localStorage.setItem("product", JSON.stringify(newBasket));
 }
 
  */
+
+
+
 
 
 // fonction : calcul du total des articles ajoutés au panier
@@ -71,6 +76,20 @@ const displayBasket = () => {
         const img = cloneSection.querySelector(".js-img—basket");
         const buttonPlus = cloneSection.querySelector(".js-plus");
         const buttonMinus = cloneSection.querySelector(".js-minus");
+        const removeBtn = cloneSection.querySelector(".remove-btn");
+
+
+        price.textContent = `Prix: ${priceEuro}`;
+        input.setAttribute("value", product[i].quantity);
+        title.textContent = product[i].object.name;
+        color.textContent = `Couleur:  ${product[i].selectedColor}`;
+        quantity.textContent = "Quantité: " + product[i].quantity;
+        img.setAttribute("src", product[i].object.imageUrl);
+        //removeBtn.setAttribute("value",product[i].id)
+
+        document.getElementById("main-basket").appendChild(cloneSection);
+
+
 
         // gestion de la qunatité
 
@@ -81,7 +100,6 @@ const displayBasket = () => {
 
             localStorage.setItem("product", JSON.stringify(product));
         })
-
 
 
         // gestion de la qunatité avec les boutons
@@ -101,16 +119,14 @@ const displayBasket = () => {
 
         });
 
+        // suppression d'un article
 
-        price.textContent = `Prix: ${priceEuro}`;
-        input.setAttribute("value", product[i].quantity);
-        title.textContent = product[i].object.name;
-        color.textContent = `Couleur:  ${product[i].selectedColor}`;
-        quantity.textContent = "Quantité: " + product[i].quantity;
-        img.setAttribute("src", product[i].object.imageUrl);
+        removeBtn.addEventListener("click", ()=> {
+            const newBasket = product.filter(p => p.id !== product[i].id && p.selectedColor !== product[i].selectedColor);
+            localStorage.setItem("product", JSON.stringify(newBasket));
 
+        })
 
-        document.getElementById("main-basket").appendChild(cloneSection);
     }
 
 // affichage prix total des nbr total d'articles
