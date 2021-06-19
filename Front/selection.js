@@ -92,7 +92,7 @@ const addBasket = (teddySelection) => {
             object: teddySelection,
         }
 
-        /*----------------------------------------local storag--------------------------------------------------*/
+        /*----------------------------------------local storage--------------------------------------------------*/
         let basket = JSON.parse(localStorage.getItem("product"))
 
         // verification s'il ya des produits dans le panier
@@ -112,8 +112,9 @@ const addBasket = (teddySelection) => {
                 } else {
                     console.log(existingEntry.quantity)
                     existingEntry.quantity++;
-                    localStorage.setItem("product", JSON.stringify(basket));
                     console.log(basket)
+                    console.log(existingEntry)
+                    localStorage.setItem("product", JSON.stringify(basket));
 
                 }
 

@@ -3,19 +3,49 @@
 //fonction : recuperation du contenu du local storage dans le pannier
 
 const getProductInLocalStorage = () => {
-    let basket = JSON.parse(localStorage.getItem("product"));
-    localStorage.setItem("product", JSON.stringify(basket));
-    return basket
+    return JSON.parse(localStorage.getItem("product"));
 }
+
+/*const foo = () => {
+    const products = getProductInLocalStorage();
+    const newBasket = products.filter(p => p.id != 'toto');
+    localStorage.setItem("product", JSON.stringify(newBasket));
+}
+
+ */
 
 
 // fonction : calcul du total des articles ajoutés au panier
+/*
+const calcTotalTeddies = ()=> {
+    const totalQuantity = [];
+    document.querySelector(".js-input-quantity").addEventListener('change', (e) => {
+        //const inputQuantity = parseInt(e.target.value, 10);
+            totalQuantity.push(e.target.value)
+        const reducer = (accumulator, currentValue) => accumulator + currentValue;
+        /*return totalQuantity.reduce((accumulator, currentValue) => {
 
-const CalcTotalTeddies = ()=>{
+            return document.getElementById("js-total-articles-basket").textContent = (accumulator + currentValue);
+
+        }, 0)
+
+
+        return totalQuantity.reduce(reducer);
+
+    })
+    console.log(totalQuantity)
+}
+
+*/
+
+const calcTotalTeddies = ()=>{
     const totalQuantity =[];
     for(let i=0; i<getProductInLocalStorage().length; i++) {
-        totalQuantity.push(getProductInLocalStorage()[i].quantity)
+        const productQuantity = parseInt(getProductInLocalStorage()[i].quantity,10);
+        totalQuantity.push(productQuantity)
+
     }
+    console.log(totalQuantity)
    return  totalQuantity.reduce((accumulator,currentValue)=>{
         return accumulator + currentValue;
     },0)
@@ -23,14 +53,17 @@ const CalcTotalTeddies = ()=>{
 }
 
 
+
+
 // fonction : calcul du prix total des articles ajoutés au panier
 
 const totalPrice = ()=> {
     const CalcTotalPrice = () => {
         const prices = [];
+        const input = document.querySelector(".js-input-quantity");
+
         for (let i = 0; i < getProductInLocalStorage().length; i++) {
-            const price = (getProductInLocalStorage()[i].object.price * document.getElementById("input-Quantity").value) / 100;
-            //parseInt(price, 10);
+            const price = (getProductInLocalStorage()[i].object.price *  input.value) /100;
             prices.push(price)
         }
         return prices.reduce((accumulator, currentValue) => {
@@ -49,70 +82,75 @@ const displayBasket = () => {
 
     for (let i = 0; i < getProductInLocalStorage().length; i++) {
 
-        const priceEuro = (new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(((getProductInLocalStorage()[i].object.price) * (getProductInLocalStorage()[i].quantity)) / 100));
+        const product = getProductInLocalStorage();
+
+        const priceEuro = (new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'})
+                          .format(((product[i].object.price) * (product[i].quantity)) / 100));
         const templateBasket = document.getElementById("teddy-in-basket");
         const cloneSection = document.importNode(templateBasket.content, true);
 
-        cloneSection.getElementById("js-title—basket").textContent = getProductInLocalStorage()[i].object.name;
-        cloneSection.getElementById("js-price—basket").textContent = "Prix: " + priceEuro;
-        cloneSection.getElementById("js-color-basket").textContent = "Couleur: " + getProductInLocalStorage()[i].selectedColor;
-        //cloneSection.getElementById("js-quantity—basket").textContent = "Quantitté:" + displayQuantity();
-        cloneSection.querySelector(".js-img—basket").setAttribute("src", getProductInLocalStorage()[i].object.imageUrl);
-        cloneSection.querySelector(".quantity").setAttribute("value", getProductInLocalStorage()[i].quantity);
+        const input = cloneSection.querySelector(".js-input-quantity");
+        const quantity = cloneSection.querySelector(".js-quantity—basket");
+        const price = cloneSection.querySelector(".js-price—basket");
+        const title = cloneSection.querySelector(".js-title—basket");
+        const color = cloneSection.querySelector(".js-color-basket");
+        const img = cloneSection.querySelector(".js-img—basket");
+        const buttonPlus = cloneSection.querySelector(".js-plus");
+        const buttonMinus = cloneSection.querySelector(".js-minus");
+
+        // gestion de la qunatité
+
+        input.addEventListener('change', (e) => {
+            quantity.textContent = `Quantité : ${e.target.value}`;
+            // mise à jour quantité dans le localstorage
+            product[i].quantity = e.target.value;
+
+            localStorage.setItem("product", JSON.stringify(product));
+        })
+
+
+
+        // gestion de la qunatité avec les boutons
+
+        buttonPlus.addEventListener('click', (e) =>{
+            input.stepUp()
+            quantity.textContent = "Quantité: " + input.value;
+            product[i].quantity++;
+            localStorage.setItem("product", JSON.stringify(product));
+        });
+        buttonMinus.addEventListener('click', () => {
+            input.stepDown()
+            quantity.textContent = "Quantité: " + input.value;
+
+            product[i].quantity--;
+            localStorage.setItem("product", JSON.stringify(product));
+
+        });
+
+
+        price.textContent = `Prix: ${priceEuro}`;
+        input.setAttribute("value", product[i].quantity);
+        title.textContent = product[i].object.name;
+        color.textContent = `Couleur:  ${product[i].selectedColor}`;
+        quantity.textContent = "Quantité: " + product[i].quantity;
+        img.setAttribute("src", product[i].object.imageUrl);
+
 
         document.getElementById("main-basket").appendChild(cloneSection);
-
     }
-        document.getElementById("js-total-articles-basket").textContent = CalcTotalTeddies();
-        document.getElementById("js-total-price-basket").textContent = totalPrice();
 
+    // affichage prix total des nbr total d'articles
+
+document.getElementById("js-total-articles-basket").textContent = calcTotalTeddies();
+document.getElementById("js-total-price-basket").textContent = totalPrice();
 }
-
-// fonction pour augumenter quantité
-
-    const addQuantity = () => {
-        const buttonPlus = document.getElementById("btn-plus");
-        buttonPlus.onclick = function() {
-                console.log(document.querySelector('input[type=number]').value)
-                document.querySelector('input[type=number]').value ++;
-        }
-
-    }
-
-// fonction pour diminuer la quantité
-
-    const decreaseQuantity = () => {
-        const buttonMinus = document.getElementById("btn-minus");
-
-        buttonMinus.addEventListener("click", function () {
-            if (document.querySelector('input[type=number]').value > 1) {
-                document.querySelector('input[type=number]').value--
-            }
-
-        })
-    }
-
-    const displayQuantity = () => {
-        console.log(document.getElementById("input-Quantity").value)
-        const inputValue = document.getElementById("input-Quantity");
-        inputValue.addEventListener("change", function () {
-
-        })
-
-    }
-
 
 // recuperation et affichage du contenu panier apres chargement du dom
 
-    document.addEventListener('DOMContentLoaded', () => {
-        getProductInLocalStorage();
-        displayBasket();
-        CalcTotalTeddies();
-        totalPrice();
-        addQuantity();
-        decreaseQuantity();
-        displayQuantity();
-    })
-
+document.addEventListener('DOMContentLoaded', () => {
+getProductInLocalStorage();
+displayBasket();
+totalPrice();
+})
 
 
