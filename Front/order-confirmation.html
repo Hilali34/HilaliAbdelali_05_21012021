@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="style.css">
   <script src="js/bootstrap.js"></script>
-  <script src="index.js"></script>
   <title>Orinoco - Confirmation</title>
 </head>
 <body>
@@ -43,64 +42,44 @@
     <div class="col-md-8 mb-4">
       <!--Section: Checkout form-->
       <section class="shadow-5 p-4">
-        <form>
+        <form action="" method="post" id="form-order" >
           <!-- 2 column grid layout with text inputs for the first and last names -->
           <div class="row mb-4">
             <div class="col">
               <div class="form-outline">
-                <input type="text" id="form6Example1" class="form-control" >
-                <label class="form-label" for="form6Example1" style="margin-left: 0px">Prénom</label>
-                <div class="form-notch">
-                  <div class="form-notch-leading" style="width: 9px"></div>
-                  <div class="form-notch-middle" style="width: 68.8px"></div>
-                  <div class="form-notch-trailing"></div>
-                </div>
+                <input type="text" id="form-first-name" name="first-name" class="form-control" placeholder="pierre" required>
+                <label class="form-label" for="form-first-name" >Prénom</label>
+                <small id="validation-first-name"></small>
               </div>
             </div>
             <div class="col">
               <div class="form-outline">
-                <input type="text" id="form6Example2" class="form-control">
-                <label class="form-label" for="form6Example2" style="margin-left: 0px">Nom</label>
-                <div class="form-notch">
-                  <div class="form-notch-leading" style="width: 9px"></div>
-                  <div class="form-notch-middle" style="width: 68px"></div>
-                  <div class="form-notch-trailing"></div>
-                </div>
+                <input type="text" id="form-last-name" name="last-name" class="form-control" placeholder="martin" required>
+                <label class="form-label" for="form-last-name" >Nom</label>
+                <small id="validation-last-name" class=""></small>
               </div>
             </div>
           </div>
 
           <!-- Text input -->
           <div class="form-outline mb-4">
-            <input type="text" id="form6Example4" class="form-control">
-            <label class="form-label" for="form6Example4" style="margin-left: 0px">Adresse</label>
-            <div class="form-notch">
-              <div class="form-notch-leading" style="width: 9px"></div>
-              <div class="form-notch-middle" style="width: 55.2px"></div>
-              <div class="form-notch-trailing"></div>
-            </div>
+            <input type="text" id="form-address" name="address" class="form-control" placeholder="1 avenue des champs-elysées" required>
+            <label class="form-label" for="form-address" >Adresse</label>
+            <small id="validation-address" class=""></small>
           </div>
 
           <!-- Text input -->
           <div class="form-outline mb-4">
-            <input type="text" id="form6Example4" class="form-control">
-            <label class="form-label" for="form6Example4" style="margin-left: 0px">Ville</label>
-            <div class="form-notch">
-              <div class="form-notch-leading" style="width: 9px"></div>
-              <div class="form-notch-middle" style="width: 55.2px"></div>
-              <div class="form-notch-trailing"></div>
-            </div>
+            <input type="text" id="form-city" name="city" class="form-control" placeholder="paris" required>
+            <label class="form-label" for="form-city" >Ville</label>
+            <small id="validation-city"></small>
           </div>
 
           <!-- Email input -->
           <div class="form-outline mb-4">
-            <input type="email" id="form6Example5" class="form-control">
-            <label class="form-label" for="form6Example5" style="margin-left: 0px">Email</label>
-            <div class="form-notch">
-              <div class="form-notch-leading" style="width: 9px"></div>
-              <div class="form-notch-middle" style="width: 40px"></div>
-              <div class="form-notch-trailing"></div>
-            </div>
+            <input type="email" id="form-email" name="email" class="form-control" placeholder="utilisateur@email.fr"  required>
+            <label class="form-label" for="form-email" >Email</label>
+            <small id="validation-email" class="" ></small>
           </div>
 
           <!-- Submit button -->
@@ -193,6 +172,6 @@
 
 
 <!--------------------------------Footer --End ----------------------------------------->
-
+<script src="order-confirmation.js"></script>
 </body>
 </html>
