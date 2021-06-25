@@ -1,46 +1,5 @@
 /********************************************    Panier    ******************************************************/
 
-//fonction : recuperation du contenu du local storage dans le pannier
-
-const getProductInLocalStorage = () => {
-    return JSON.parse(localStorage.getItem("product"));
-}
-
-
-// fonction : calcul du total des articles ajoutés au panier
-
-const calcTotalTeddies = ()=>{
-    const totalQuantity =[];
-    for(let i=0; i<getProductInLocalStorage().length; i++) {
-        const productQuantity = parseInt(getProductInLocalStorage()[i].quantity,10);
-        totalQuantity.push(productQuantity)
-
-    }
-    console.log(totalQuantity)
-   return  totalQuantity.reduce((accumulator,currentValue)=>{
-        return accumulator + currentValue;
-    },0)
-
-}
-
-
-// fonction : calcul du prix total des articles ajoutés au panier
-
-const calcTotalPrice = ()=>{
-    const totalPrice =[];
-    for(let i=0; i<getProductInLocalStorage().length; i++) {
-        const  productPrice = ((getProductInLocalStorage()[i].object.price) * (getProductInLocalStorage()[i].quantity));
-        console.log(productPrice)
-        totalPrice.push(productPrice)
-    }
-    console.log(totalPrice)
-    return  totalPrice.reduce((accumulator,currentValue)=>{
-        return accumulator + currentValue;
-    },0)
-
-}
-
-
 // fonction : affichage du contenu panier
 
 const displayBasket = () => {
@@ -84,6 +43,8 @@ const displayBasket = () => {
             localProducts[i].quantity = e.target.value;
 
             localStorage.setItem("product", JSON.stringify(localProducts));
+
+            displayTotalArticleAndPrice()
         })
 
 
@@ -96,6 +57,8 @@ const displayBasket = () => {
 
             localProducts[i].quantity++;
             localStorage.setItem("product", JSON.stringify(localProducts));
+
+            displayTotalArticleAndPrice()
         });
         buttonMinus.addEventListener('click', () => {
             const localProducts = getProductInLocalStorage();
@@ -105,13 +68,14 @@ const displayBasket = () => {
             localProducts[i].quantity--;
             localStorage.setItem("product", JSON.stringify(localProducts));
 
+            displayTotalArticleAndPrice()
+
         });
 
         // suppression d'un article
 
         removeBtn.addEventListener("click", ()=> {
             const localProducts = getProductInLocalStorage();
-
             const newBasket = localProducts.filter(p => p.id !== localProducts[i].id && p.selectedColor !== localProducts[i].selectedColor);
             localStorage.setItem("product", JSON.stringify(newBasket));
 
@@ -119,23 +83,25 @@ const displayBasket = () => {
 
     }
 
-// affichage prix total et nbr total d'articles
-
-const totalPriceInEuro = (new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'})
-        .format((calcTotalPrice()) / 100));
-
-document.getElementById("js-total-articles-basket").textContent = calcTotalTeddies();
-document.getElementById("js-total-price-basket").textContent = totalPriceInEuro;
 }
+
+// verification du contenu du panier avant de passer a la confirmation
+
+const btnConfirmation = document.getElementById("orderConfirmation");
+btnConfirmation.addEventListener("click",(e)=>{
+
+    if(getProductInLocalStorage().length === 0){
+        e.preventDefault();
+        alert("votre pannier est vide merci d'ajouter un ou plusiuers articles")
+    }
+})
 
 
 // recuperation et affichage du contenu panier apres chargement du dom
 
 document.addEventListener('DOMContentLoaded', () => {
-getProductInLocalStorage();
-displayBasket();
-calcTotalTeddies();
-calcTotalPrice();
+    getProductInLocalStorage();
+    displayBasket();
 })
 
 

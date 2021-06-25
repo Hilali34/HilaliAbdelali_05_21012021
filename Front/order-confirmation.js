@@ -1,3 +1,5 @@
+
+
 // test Regex
 const isInfoValid = (myRegExp,value) => {
     return myRegExp.test(value);
