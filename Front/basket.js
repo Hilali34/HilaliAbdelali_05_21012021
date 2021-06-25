@@ -6,19 +6,6 @@ const getProductInLocalStorage = () => {
     return JSON.parse(localStorage.getItem("product"));
 }
 
-/*
-    const products = getProductInLocalStorage();
-    const idProductToTrash = document.querySelector("remove-btn").value;
-    console.log(idProductToTrash)
-    const newBasket = products.filter(p => p.id != idProductToTrash);
-    localStorage.setItem("product", JSON.stringify(newBasket));
-}
-
- */
-
-
-
-
 
 // fonction : calcul du total des articles ajoutés au panier
 
@@ -35,7 +22,6 @@ const calcTotalTeddies = ()=>{
     },0)
 
 }
-
 
 
 // fonction : calcul du prix total des articles ajoutés au panier
@@ -59,12 +45,12 @@ const calcTotalPrice = ()=>{
 
 const displayBasket = () => {
 
+    const products = getProductInLocalStorage();
+
     for (let i = 0; i < getProductInLocalStorage().length; i++) {
 
-        const product = getProductInLocalStorage();
-
         const priceEuro = (new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'})
-                          .format(((product[i].object.price) * (product[i].quantity)) / 100));
+                          .format(((products[i].object.price) * (products[i].quantity)) / 100));
         const templateBasket = document.getElementById("teddy-in-basket");
         const cloneSection = document.importNode(templateBasket.content, true);
 
@@ -80,56 +66,60 @@ const displayBasket = () => {
 
 
         price.textContent = `Prix: ${priceEuro}`;
-        input.setAttribute("value", product[i].quantity);
-        title.textContent = product[i].object.name;
-        color.textContent = `Couleur:  ${product[i].selectedColor}`;
-        quantity.textContent = "Quantité: " + product[i].quantity;
-        img.setAttribute("src", product[i].object.imageUrl);
-        //removeBtn.setAttribute("value",product[i].id)
+        input.setAttribute("value", products[i].quantity);
+        title.textContent = products[i].object.name;
+        color.textContent = `Couleur:  ${products[i].selectedColor}`;
+        quantity.textContent = "Quantité: " + products[i].quantity;
+        img.setAttribute("src", products[i].object.imageUrl);
 
         document.getElementById("main-basket").appendChild(cloneSection);
 
 
-
-        // gestion de la qunatité
+        // gestion de la quantité
 
         input.addEventListener('change', (e) => {
+            const localProducts = getProductInLocalStorage();
             quantity.textContent = `Quantité : ${e.target.value}`;
             // mise à jour quantité dans le localstorage
-            product[i].quantity = e.target.value;
+            localProducts[i].quantity = e.target.value;
 
-            localStorage.setItem("product", JSON.stringify(product));
+            localStorage.setItem("product", JSON.stringify(localProducts));
         })
 
 
-        // gestion de la qunatité avec les boutons
+        // gestion de la quantité avec les boutons
 
         buttonPlus.addEventListener('click', (e) =>{
+            const localProducts = getProductInLocalStorage();
             input.stepUp()
             quantity.textContent = "Quantité: " + input.value;
-            product[i].quantity++;
-            localStorage.setItem("product", JSON.stringify(product));
+
+            localProducts[i].quantity++;
+            localStorage.setItem("product", JSON.stringify(localProducts));
         });
         buttonMinus.addEventListener('click', () => {
+            const localProducts = getProductInLocalStorage();
             input.stepDown()
             quantity.textContent = "Quantité: " + input.value;
 
-            product[i].quantity--;
-            localStorage.setItem("product", JSON.stringify(product));
+            localProducts[i].quantity--;
+            localStorage.setItem("product", JSON.stringify(localProducts));
 
         });
 
         // suppression d'un article
 
         removeBtn.addEventListener("click", ()=> {
-            const newBasket = product.filter(p => p.id !== product[i].id && p.selectedColor !== product[i].selectedColor);
+            const localProducts = getProductInLocalStorage();
+
+            const newBasket = localProducts.filter(p => p.id !== localProducts[i].id && p.selectedColor !== localProducts[i].selectedColor);
             localStorage.setItem("product", JSON.stringify(newBasket));
 
         })
 
     }
 
-// affichage prix total des nbr total d'articles
+// affichage prix total et nbr total d'articles
 
 const totalPriceInEuro = (new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'})
         .format((calcTotalPrice()) / 100));
@@ -144,6 +134,7 @@ document.getElementById("js-total-price-basket").textContent = totalPriceInEuro;
 document.addEventListener('DOMContentLoaded', () => {
 getProductInLocalStorage();
 displayBasket();
+calcTotalTeddies();
 calcTotalPrice();
 })
 

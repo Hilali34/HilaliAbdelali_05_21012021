@@ -1,65 +1,84 @@
+// test Regex
+const isInfoValid = (myRegExp,value) => {
+    return myRegExp.test(value);
+}
 
 
+// verifie la validité  des informations saisie par l'utilisateur
 
-// verifie la validité  du format de l'adresse mail
+const checkValidityInfoForm = (input,outputMsgValidity,regExpValidity) =>{
 
-const validEmail = () =>{
-    let formOrder = document.querySelector("#form-order");
 
-    formOrder.email.addEventListener("change",()=>{
-        let inputEmail = formOrder.email;
-        let emailRegExp = new RegExp(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-        let testEmail = emailRegExp.test(inputEmail.value);
-        let validationMsg = document.getElementById("validation-email");
+    console.log(regExpValidity)
 
-        if(testEmail){
-            console.log(testEmail)
-            validationMsg.textContent = "valide"
-            validationMsg.className = "text-success";
+    input.addEventListener("change",()=>{
 
-        }else if (!testEmail && inputEmail.value !== ""){
-            console.log(testEmail)
-            validationMsg.textContent = "invalide"
-            validationMsg.className = "text-danger";
+        if(regExpValidity){
+
+            outputMsgValidity.textContent = "valide"
+            outputMsgValidity.className = "text-success";
+
+        }else if ((!regExpValidity) && input.value !== ""){
+            console.log(regExpValidity)
+            outputMsgValidity.textContent = "invalide"
+            outputMsgValidity.className = "text-danger";
 
         }else{
-            validationMsg.textContent = ""
+            outputMsgValidity.textContent = ""
         }
     })
 }
 
-// verifie la validité  du format de l'adresse mail
+// recuperation des données a envoyer au serveur
 
-const validAddress = () =>{
-    let formOrder = document.querySelector("#form-order");
+const getOrderInfo = ()=>{
+    const btnSubmit = document.getElementById("order-submit");
+    btnSubmit.addEventListener("click",()=>{
 
-    formOrder.address.addEventListener("change",()=>{
-        let inputAddress = formOrder.address;
-        console.log(inputAddress);
-        let addressRegExp = /(\d{1,}) [a-zA-Z0-9\s]+(\.)? [a-zA-Z]+/;
-        let testAddress = addressRegExp.test(inputAddress.value);
-        let validationMsg = document.getElementById("validation-address");
-
-        if(testAddress){
-            console.log(testAddress)
-            validationMsg.textContent = "valide"
-            validationMsg.className = "text-success";
-
-        }else if (!testAddress && inputAddress.value !== ""){
-            console.log(testAddress)
-            validationMsg.textContent = "invalide"
-            validationMsg.className = "text-danger";
-
-        }else{
-            validationMsg.textContent = ""
-        }
     })
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
-    validEmail();
-    validAddress();
+
+
+    // regExp nom, prénom et ville
+    const infoRegExp = new RegExp(/^([a-z]+[,.]?[ ]?|[a-z]+['-]?)+$/);
+    const emailRegExp = new RegExp(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    const addressRegExp = new RegExp (/(^\d{1,}) [a-zA-Z0-9\s]+(\.)? [a-zA-Z]+$/);
+    // les input a tester
+    const firstNameInput = document.querySelector("#form-order").firstName;
+    const lastNameInput = document.querySelector("#form-order").lastName;
+    const cityInput = document.querySelector("#form-order").city;
+    const emailInput = document.querySelector("#form-order").email;
+    const addressInput = document.querySelector("#form-order").address;
+
+    // les Output pour afficher le message de validité
+    const outputMsgFirstName = document.getElementById("validation-firstName");
+    const outputMsgLastName = document.getElementById("validation-lastName");
+    const outputMsgCity = document.getElementById("validation-city");
+    const outputMsgEmail = document.getElementById("validation-email");
+    const outputMsgAddress = document.getElementById("validation-address");
+
+    document.querySelector('form').addEventListener('submit', () => isFormValid())
+
+
+    checkValidityInfoForm(firstNameInput,outputMsgFirstName,isInfoValid(infoRegExp,firstNameInput.value))
+    checkValidityInfoForm(lastNameInput,outputMsgLastName,isInfoValid(infoRegExp,lastNameInput.value))
+    checkValidityInfoForm(cityInput,outputMsgCity,isInfoValid(infoRegExp,cityInput.value))
+    checkValidityInfoForm(emailInput,outputMsgEmail,isInfoValid(emailRegExp,emailInput.value))
+    checkValidityInfoForm(addressInput,outputMsgAddress,isInfoValid(addressRegExp,addressInput.value))
+
+
+
+    const isFormValid = () => {
+        let formOrder = document.querySelector("#form-order");
+        return isInfoValid(infoRegExp,firstNameInput.value)
+                && isInfoValid(infoRegExp,lastNameInput.value)
+                && isInfoValid(infoRegExp,cityInput.value)
+                && isInfoValid(emailRegExp,emailInput.value)
+                && isInfoValid(addressRegExp,addressInput.value)
+    }
+
 })
 
 
