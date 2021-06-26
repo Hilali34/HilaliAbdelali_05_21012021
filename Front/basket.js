@@ -64,11 +64,12 @@ const displayBasket = () => {
             const localProducts = getProductInLocalStorage();
             input.stepDown()
             quantity.textContent = "Quantité: " + input.value;
+            if (localProducts[i].quantity>1){
+                localProducts[i].quantity--;
+                localStorage.setItem("product", JSON.stringify(localProducts));
 
-            localProducts[i].quantity--;
-            localStorage.setItem("product", JSON.stringify(localProducts));
-
-            displayTotalArticleAndPrice()
+                displayTotalArticleAndPrice()
+            }
 
         });
 
