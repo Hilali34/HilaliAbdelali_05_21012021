@@ -10,17 +10,20 @@ const isInfoValid = (myRegExp,value) => {
 
 const checkValidityInfoForm = (input,outputMsgValidity,regExpValidity) =>{
 
-
+    const infoRegExp = new RegExp(/^([a-z]+[,.]?[ ]?|[a-z]+['-]?)+$/);
+    const firstNameInput = document.querySelector("#form-order").firstName;
     console.log(regExpValidity)
 
     input.addEventListener("change",()=>{
 
         if(regExpValidity){
-
+            console.log(isInfoValid(infoRegExp,firstNameInput.value));
+            console.log(regExpValidity)
             outputMsgValidity.textContent = "valide"
             outputMsgValidity.className = "text-success";
 
         }else if ((!regExpValidity) && input.value !== ""){
+            console.log(isInfoValid(infoRegExp,firstNameInput.value));
             console.log(regExpValidity)
             outputMsgValidity.textContent = "invalide"
             outputMsgValidity.className = "text-danger";
@@ -31,17 +34,17 @@ const checkValidityInfoForm = (input,outputMsgValidity,regExpValidity) =>{
     })
 }
 
-// recuperation des données a envoyer au serveur
+// fonction pour generer un id unique de la commande
 
-const getOrderInfo = ()=>{
-    const btnSubmit = document.getElementById("order-submit");
-    btnSubmit.addEventListener("click",()=>{
+const generateOrderId =  () => {
 
-    })
-}
+    return  Math.random().toString(36).substr(2, 9);
+};
+
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
-
 
     // regExp nom, prénom et ville
     const infoRegExp = new RegExp(/^([a-z]+[,.]?[ ]?|[a-z]+['-]?)+$/);
@@ -61,18 +64,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const outputMsgEmail = document.getElementById("validation-email");
     const outputMsgAddress = document.getElementById("validation-address");
 
-    document.querySelector('form').addEventListener('submit', () => isFormValid())
+    //document.getElementById("form-order").addEventListener('submit', () => isFormValid())
+
+    //checkValidityInfoForm(firstNameInput,outputMsgFirstName,isInfoValid(infoRegExp,firstNameInput.value))
+    //checkValidityInfoForm(lastNameInput,outputMsgLastName,isInfoValid(infoRegExp,lastNameInput.value))
+    //checkValidityInfoForm(cityInput,outputMsgCity,isInfoValid(infoRegExp,cityInput.value))
+    //checkValidityInfoForm(emailInput,outputMsgEmail,isInfoValid(emailRegExp,emailInput.value))
+    //checkValidityInfoForm(addressInput,outputMsgAddress,isInfoValid(addressRegExp,addressInput.value))
 
 
-    checkValidityInfoForm(firstNameInput,outputMsgFirstName,isInfoValid(infoRegExp,firstNameInput.value))
-    checkValidityInfoForm(lastNameInput,outputMsgLastName,isInfoValid(infoRegExp,lastNameInput.value))
-    checkValidityInfoForm(cityInput,outputMsgCity,isInfoValid(infoRegExp,cityInput.value))
-    checkValidityInfoForm(emailInput,outputMsgEmail,isInfoValid(emailRegExp,emailInput.value))
-    checkValidityInfoForm(addressInput,outputMsgAddress,isInfoValid(addressRegExp,addressInput.value))
 
-
-
-    const isFormValid = () => {
+   /* const isFormValid = () => {
         let formOrder = document.querySelector("#form-order");
         return isInfoValid(infoRegExp,firstNameInput.value)
                 && isInfoValid(infoRegExp,lastNameInput.value)
@@ -81,6 +83,52 @@ document.addEventListener('DOMContentLoaded', () => {
                 && isInfoValid(addressRegExp,addressInput.value)
     }
 
+    */
+    // envoi des données  au serveur via une requette fetch post
+
+    const postOrderInfo = function () {
+        const formSubmit = document.getElementById("form-order");
+
+        formSubmit.addEventListener("submit", function (e) {
+             e.preventDefault();
+
+                const formData = new FormData(this);
+                console.log(formData)
+
+            // creation objet a envoyer au serveur via fetch post
+            const idOfProductsInLocalStorage = []
+            for (let i = 0; i < getProductInLocalStorage().length; i++) {
+                idOfProductsInLocalStorage.push(getProductInLocalStorage()[i].id);
+            }
+            const localProducts = getProductInLocalStorage();
+            console.log(localProducts)
+            const order = {contact :{
+                firstName: firstNameInput.value,
+                lastName: lastNameInput.value,
+                address: addressInput.value,
+                city: cityInput.value,
+                email: emailInput.value,
+            },
+            products : idOfProductsInLocalStorage
+            }
+            console.log(order)
+            console.log(idOfProductsInLocalStorage);
+
+            fetch("http://localhost:3000/api/teddies/order", {
+                method: "POST",
+                body: JSON.stringify(order),
+                headers: {
+                    "Content-Type": "application/jason"
+                },
+            }).then(response => response.json())
+            .then((json) => {
+                console.log(json)
+
+            })
+            .catch(error => console.log(error));
+        })
+    }
+    postOrderInfo();
 })
 
 
