@@ -37,87 +37,42 @@
 </header>
 <!--------------------------------Content Page --Start ----------------------------------------->
 <main class="container">
-  <h1 class="h3 mb-4 mt-4">Confirmation de votre commande</h1>
-  <div class="row">
-    <div class="col-md-8 mb-4">
-      <!--Section: Checkout form-->
-      <section class="shadow-5 p-4">
-        <form action="" method="post" id="form-order" >
-          <!-- 2 column grid layout with text inputs for the first and last names -->
-          <div class="row mb-4">
-            <div class="col">
-              <div class="form-outline">
-                <input type="text" id="form-first-name" name="firstName" class="form-control" placeholder="pierre" required>
-                <label class="form-label" for="form-first-name" >Prénom</label>
-                <small id="validation-firstName"></small>
+  <div class="container py-4">
+    <header class="pb-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+
+      </a>
+    </header>
+
+    <div class="p-5 mb-4 bg-light rounded-3">
+      <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Merci pour votre commande</h1>
+        <div class="col-lg-6 mb-4 p-4">
+            <div class="card">
+              <div class="card-header bg-white text-center py-3">
+                <h5 class="mb-0 fw-bold">Résumé de votre commande</h5>
+              </div>
+
+              <div class="card-body">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                    Nombre total d'articles:
+                    <span id="js-total-articles-basket"></span>
+                  </li>
+
+                </ul>
+              </div>
+
+              <div class="card-footer bg-white d-flex justify-content-between py-3">
+                <strong>Prix TOTAL:</strong>
+                <span><strong id="js-total-price-basket"></strong></span>
               </div>
             </div>
-            <div class="col">
-              <div class="form-outline">
-                <input type="text" id="form-last-name" name="lastName" class="form-control" placeholder="martin" required>
-                <label class="form-label" for="form-last-name" >Nom</label>
-                <small id="validation-lastName" class=""></small>
-              </div>
-            </div>
-          </div>
-
-          <!-- Text input -->
-          <div class="form-outline mb-4">
-            <input type="text" id="form-address" name="address" class="form-control" placeholder="1 avenue des champs-elysées" required>
-            <label class="form-label" for="form-address" >Adresse</label>
-            <small id="validation-address" class=""></small>
-          </div>
-
-          <!-- Text input -->
-          <div class="form-outline mb-4">
-            <input type="text" id="form-city" name="city" class="form-control" placeholder="paris" required>
-            <label class="form-label" for="form-city" >Ville</label>
-            <small id="validation-city"></small>
-          </div>
-
-          <!-- Email input -->
-          <div class="form-outline mb-4">
-            <input type="email" id="form-email" name="email" class="form-control" placeholder="utilisateur@email.fr"  required>
-            <label class="form-label" for="form-email" >Email</label>
-            <small id="validation-email" class="" ></small>
-          </div>
-
-          <!-- Submit button -->
-          <a href="check-out.html" type="submit" class="btn mybg-secondary btn-block mb-4" id="order-submit">
-            Commander
-          </a>
-        </form>
-      </section>
-      <!--Section: Checkout form-->
-    </div>
-
-    <div class="col-md-4 mb-4 p-4">
-      <!--Section: Summary-->
-      <section>
-
-        <div class="card">
-          <div class="card-header bg-white text-center py-3">
-            <h5 class="mb-0 fw-bold">Résumé de votre commande</h5>
-          </div>
-
-          <div class="card-body">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                Nombre total d'articles:
-                <span id="js-total-articles-basket"></span>
-              </li>
-
-            </ul>
-          </div>
-
-          <div class="card-footer bg-white d-flex justify-content-between py-3">
-            <strong>Prix TOTAL:</strong>
-            <span><strong id="js-total-price-basket"></strong></span>
-          </div>
         </div>
-      </section>
-      <!--Section: Summary-->
+
+      </div>
     </div>
+
   </div>
 </main>
 
@@ -172,7 +127,8 @@
 
 
 <!--------------------------------Footer --End ----------------------------------------->
-<script src="order-confirmation.js"></script>
+<script src="check-out.js"></script>
 <script src="utilities.js"></script>
+
 </body>
 </html>

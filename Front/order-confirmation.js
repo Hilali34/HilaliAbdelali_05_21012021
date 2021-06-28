@@ -118,12 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 method: "POST",
                 body: JSON.stringify(order),
                 headers: {
-                    "Content-Type": "application/jason"
+                    "Content-Type": "application/json"
                 },
             }).then(response => response.json())
             .then((json) => {
                 console.log(json)
-
+                localStorage.setItem("checkOut", JSON.stringify(json));
             })
             .catch(error => console.log(error));
         })
