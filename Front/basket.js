@@ -82,9 +82,11 @@ const displayBasket = () => {
 
         removeBtn.addEventListener("click", ()=> {
             const localProducts = getProductInLocalStorage();
-            const newBasket = localProducts.filter(p => p.id !== localProducts[i].id && p.selectedColor !== localProducts[i].selectedColor);
+            console.log(localProducts[i].id)
+            console.log(localProducts[i].selectedColor)
+            const newBasket = localProducts.filter(p => p.id === localProducts[i].id && p.selectedColor !== localProducts[i].selectedColor || p.id !== localProducts[i].id );
             localStorage.setItem("product", JSON.stringify(newBasket));
-            displayBasket();
+             displayBasket();
         })
 
     }
