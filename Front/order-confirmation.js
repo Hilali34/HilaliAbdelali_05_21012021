@@ -1,6 +1,6 @@
 // test Regex prénom
 const isFirstNameValid = () => {
-    const infoRegExp = new RegExp(/^([a-zA]+[,.]?[ ]?|[a-zA]+['-]?)+$/);
+    const infoRegExp = new RegExp(/^([a-zA-Z]+[,.]?[ ]?|[a-zA-Z]+['-]?)+$/);
     const firstNameInput = document.querySelector("#form-order").firstName;
     console.log(firstNameInput)
     return infoRegExp.test(firstNameInput.value);
@@ -8,7 +8,7 @@ const isFirstNameValid = () => {
 
 // test Regex nom
 const isLastNameValid = () => {
-    const infoRegExp = new RegExp(/^([a-zA]+[,.]?[ ]?|[a-zA]+['-]?)+$/);
+    const infoRegExp = new RegExp(/^([a-zA-Z]+[,.]?[ ]?|[a-zA-Z]+['-]?)+$/);
     const lastNameInput = document.querySelector("#form-order").lastName;
     console.log(lastNameInput)
     return infoRegExp.test(lastNameInput.value);
@@ -16,7 +16,7 @@ const isLastNameValid = () => {
 
 // test Regex ville
 const isCityValid = () => {
-    const infoRegExp = new RegExp(/^([a-zA]+[,.]?[ ]?|[a-zA]+['-]?)+$/);
+    const infoRegExp = new RegExp(/^([a-zA-Z]+[,.]?[ ]?|[a-zA-Z]+['-]?)+$/);
     const cityInput = document.querySelector("#form-order").city;
     console.log(cityInput)
     return infoRegExp.test(cityInput.value);
@@ -184,44 +184,55 @@ const isFormValid = () => {
 
 const postOrderInfo = function () {
     const formSubmit = document.getElementById("form-order");
+    const firstNameInput = document.querySelector("#form-order").firstName;
+    const lastNameInput = document.querySelector("#form-order").lastName;
+    const emailInput = document.querySelector("#form-order").email;
+    const addressInput = document.querySelector("#form-order").address;
+    const cityInput = document.querySelector("#form-order").city;
+
 
     formSubmit.addEventListener("submit", function (e) {
         e.preventDefault();
-
         const formData = new FormData(this);
         console.log(formData)
 
-        // creation objet a envoyer au serveur via fetch post
-        const idOfProductsInLocalStorage = getProductInLocalStorage().map(p => p.id);
-        console.log(idOfProductsInLocalStorage);
-        const localProducts = getProductInLocalStorage();
-        console.log(localProducts)
-        const order = {
-            contact: {
-                firstName: firstNameInput.value,
-                lastName: lastNameInput.value,
-                address: addressInput.value,
-                city: cityInput.value,
-                email: emailInput.value,
-            },
-            products: idOfProductsInLocalStorage
-        }
-        console.log(order)
-        console.log(idOfProductsInLocalStorage);
+            // creation objet a envoyer au serveur via fetch post
+            const idOfProductsInLocalStorage = getProductInLocalStorage().map(p => p.id);
+            console.log(idOfProductsInLocalStorage);
+            const localProducts = getProductInLocalStorage();
+            console.log(localProducts)
+            const order = {
+                contact: {
+                    firstName: firstNameInput.value,
+                    lastName: lastNameInput.value,
+                    address: addressInput.value,
+                    city: cityInput.value,
+                    email: emailInput.value,
+                },
+                products: idOfProductsInLocalStorage
+            }
+            console.log(order)
+            console.log(idOfProductsInLocalStorage);
 
-        fetch("http://localhost:3000/api/teddies/order", {
-            method: "POST",
-            body: JSON.stringify(order),
-            headers: {
-                "Content-Type": "application/json"
-            },
-        }).then(response => response.json())
-            .then((json) => {
-                console.log(json)
-                localStorage.setItem("checkOut", JSON.stringify(json));
-            })
-            .catch(error => console.log(error));
+            fetch("http://localhost:3000/api/teddies/order", {
+                method: "POST",
+                body: JSON.stringify(order),
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            }).then(response => response.json())
+                .then((json) => {
+                    console.log(json)
+                    localStorage.setItem("checkOut", JSON.stringify(json));
+                })
+                .catch(error => console.log(error));
+
+        if(isFormValid()) {
+
+            document.getElementById("form-order").submit();
+        }
     })
+
 }
 
 
@@ -231,17 +242,6 @@ document.addEventListener('DOMContentLoaded', () => {
     checkValidityCity();
     checkValidityAddress();
     checkValidityEmail();
-
-    document.getElementById("form-order").addEventListener('submit', (e) => {
-        e.preventDefault();
-
-       if(isFormValid()){
-           document.getElementById("form-order").submit();
-
-       }
-    })
-
     postOrderInfo();
-
 })
 

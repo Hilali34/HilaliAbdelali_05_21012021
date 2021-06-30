@@ -47,14 +47,18 @@
     <div class="p-5 mb-4 bg-light rounded-3">
       <div class="container-fluid py-5">
         <h1 class="display-5 fw-bold">Merci pour votre commande</h1>
-        <div class="col-lg-6 mb-4 p-4">
+        <div class=" mb-4 p-4">
             <div class="card">
               <div class="card-header bg-white text-center py-3">
-                <h5 class="mb-0 fw-bold">Résumé de votre commande</h5>
+                <h5 class="mb-0 fw-bold" >Résumé de votre commande</h5>
               </div>
 
               <div class="card-body">
                 <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                    Référence de votre commande:
+                    <span id="orderId"></span>
+                  </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                     Nombre total d'articles:
                     <span id="js-total-articles-basket"></span>
