@@ -6,6 +6,10 @@ const displayBasket = () => {
 
     const products = getProductInLocalStorage();
 
+    const container = document.getElementById("main-basket");
+
+    while (container.firstChild){container.removeChild(container.firstChild);};
+
     for (let i = 0; i < getProductInLocalStorage().length; i++) {
 
         const priceEuro = (new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'})
@@ -62,9 +66,10 @@ const displayBasket = () => {
         });
         buttonMinus.addEventListener('click', () => {
             const localProducts = getProductInLocalStorage();
-            input.stepDown()
-            quantity.textContent = "Quantité: " + input.value;
+
             if (localProducts[i].quantity>1){
+                input.stepDown()
+                quantity.textContent = "Quantité: " + input.value;
                 localProducts[i].quantity--;
                 localStorage.setItem("product", JSON.stringify(localProducts));
 
@@ -79,10 +84,12 @@ const displayBasket = () => {
             const localProducts = getProductInLocalStorage();
             const newBasket = localProducts.filter(p => p.id !== localProducts[i].id && p.selectedColor !== localProducts[i].selectedColor);
             localStorage.setItem("product", JSON.stringify(newBasket));
-
+            displayBasket();
         })
 
     }
+
+    displayTotalArticleAndPrice()
 
 }
 
