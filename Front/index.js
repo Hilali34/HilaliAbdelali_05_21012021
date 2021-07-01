@@ -1,10 +1,10 @@
 /******************************************** Page d'acceuil ******************************************************/
 
 
-// cette fonction recupère la liste des produit grace a l'API
+// cette fonction recupère la liste des produits grace avec fetch GET
 
 const getTeddiesList = () => {
-      return fetch(" http://localhost:3000/api/teddies")
+    return fetch(" http://localhost:3000/api/teddies")
         .then(response => response.json())
 
         .catch(function (error) {
@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     })
 });
-
 
 
 // cette fonction affiches la liste des produits

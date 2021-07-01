@@ -3,28 +3,29 @@
 
 // Récuperation de l'id a partir de l'url
 
-const idOfSelection =  new URLSearchParams(window.location.search).get("id")
-
+const idOfSelection = new URLSearchParams(window.location.search).get("id")
 
 
 // Récupuration du produit par son id
 
 const getTeddyById = (id) => {
 
-        return fetch(` http://localhost:3000/api/teddies/${id}`)
-            .then(response => response.json())
-            .catch(function (error) {
-                alert("Une erreur s'est produite: " + error)
-            })
+    return fetch(` http://localhost:3000/api/teddies/${id}`)
+        .then(response => response.json())
+        .catch(function (error) {
+            alert("Une erreur s'est produite: " + error)
+        })
 
 }
+
+// affichage du produit selectionné avec les options de personnalisation
 
 document.addEventListener('DOMContentLoaded', () => {
     if (idOfSelection !== null) {
         getTeddyById(idOfSelection).then(teddySelection => {
             displayTeddy(teddySelection);
-            displayOption(teddySelection);
-            getColorsOption();
+            displayOptionOfTeddy(teddySelection);
+            getColorsOptionOfTeddy();
             addBasket(teddySelection);
             document.getElementById("js-display-title-selection").hidden = true;
 
@@ -38,9 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Affichage de l'article selectionné
 
-const  displayTeddy =  (teddySelection) =>{
+const displayTeddy = (teddySelection) => {
 
-    const priceEuro = (new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR'}).format(teddySelection.price/100));
+    const priceEuro = (new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'EUR'
+    }).format(teddySelection.price / 100));
     const templateSection = document.getElementById("teddy");
     const cloneSection = document.importNode(templateSection.content, true);
 
@@ -53,30 +57,27 @@ const  displayTeddy =  (teddySelection) =>{
 }
 
 
-
 // Ajout des couleurs disponibles dans les options
 
- const displayOption = (teddySelection) => {
-    for (let i= 0; i <teddySelection.colors.length; i++) {
+const displayOptionOfTeddy = (teddySelection) => {
+    for (let i = 0; i < teddySelection.colors.length; i++) {
 
         const formColors = document.getElementById('inputGroupSelect01');
         const optionColors = document.createElement("option");
 
         formColors.appendChild(optionColors);
-        optionColors.setAttribute("value",teddySelection.colors[i]);
+        optionColors.setAttribute("value", teddySelection.colors[i]);
         optionColors.textContent = teddySelection.colors[i];
     }
 }
 
 
-
 // recuperation de la couleur choisis par l'utilisateur
 
-const getColorsOption = () => {
-    const color =document.getElementById("inputGroupSelect01");
+const getColorsOptionOfTeddy = () => {
+    const color = document.getElementById("inputGroupSelect01");
     return color.value
 }
-
 
 
 // Ajouter produit au panier via le local storage
@@ -98,30 +99,30 @@ const addBasket = (teddySelection) => {
         // verification s'il ya des produits dans le panier
         if (basket) {
 
-                // verification si le produits que le client ajout est deja preesent dans le panier
+            // verification si le produits que le client ajout est deja preesent dans le panier
 
-                const existingEntry = basket.find(e => e.id === productToAddToBasket.id && e.selectedColor === productToAddToBasket.selectedColor);
+            const existingEntry = basket.find(e => e.id === productToAddToBasket.id && e.selectedColor === productToAddToBasket.selectedColor);
 
-                // ajout produit
+            // ajout produit
 
-                if (!existingEntry) {
-                    basket.push(productToAddToBasket);
-                    localStorage.setItem("product", JSON.stringify(basket));
-                    console.log(basket)
+            if (!existingEntry) {
+                basket.push(productToAddToBasket);
+                localStorage.setItem("product", JSON.stringify(basket));
+                console.log(basket)
 
-                } else {
-                    console.log(existingEntry.quantity)
-                    existingEntry.quantity++;
-                    console.log(basket)
-                    console.log(existingEntry)
-                    localStorage.setItem("product", JSON.stringify(basket));
+            } else {
+                console.log(existingEntry.quantity)
+                existingEntry.quantity++;
+                console.log(basket)
+                console.log(existingEntry)
+                localStorage.setItem("product", JSON.stringify(basket));
 
-                }
+            }
 
             // augmentation de la quantité
 
         } else {
-            const initialStorageValue = [ productToAddToBasket ]
+            const initialStorageValue = [productToAddToBasket]
             localStorage.setItem("product", JSON.stringify(initialStorageValue));
             console.log(basket);
         }

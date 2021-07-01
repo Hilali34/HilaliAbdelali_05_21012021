@@ -6,14 +6,21 @@ const displayBasket = () => {
 
     const products = getProductInLocalStorage();
 
+    // supprission du noeud suite a la suppression d'article
+
     const container = document.getElementById("main-basket");
 
-    while (container.firstChild){container.removeChild(container.firstChild);};
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
 
-    for (let i = 0; i < getProductInLocalStorage().length; i++) {
+
+    for (let i = 0; i < products.length; i++) {
+
+        console.log(products)
 
         const priceEuro = (new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'})
-                          .format(((products[i].object.price) * (products[i].quantity)) / 100));
+            .format(((products[i].object.price) * (products[i].quantity)) / 100));
         const templateBasket = document.getElementById("teddy-in-basket");
         const cloneSection = document.importNode(templateBasket.content, true);
 
@@ -27,7 +34,7 @@ const displayBasket = () => {
         const buttonMinus = cloneSection.querySelector(".js-minus");
         const removeBtn = cloneSection.querySelector(".remove-btn");
 
-
+        console.log(products);
         price.textContent = `Prix: ${priceEuro}`;
         input.setAttribute("value", products[i].quantity);
         title.textContent = products[i].object.name;
@@ -54,7 +61,7 @@ const displayBasket = () => {
 
         // gestion de la quantité avec les boutons
 
-        buttonPlus.addEventListener('click', (e) =>{
+        buttonPlus.addEventListener('click', (e) => {
             const localProducts = getProductInLocalStorage();
             input.stepUp()
             quantity.textContent = "Quantité: " + input.value;
@@ -67,7 +74,7 @@ const displayBasket = () => {
         buttonMinus.addEventListener('click', () => {
             const localProducts = getProductInLocalStorage();
 
-            if (localProducts[i].quantity>1){
+            if (localProducts[i].quantity > 1) {
                 input.stepDown()
                 quantity.textContent = "Quantité: " + input.value;
                 localProducts[i].quantity--;
@@ -80,13 +87,13 @@ const displayBasket = () => {
 
         // suppression d'un article
 
-        removeBtn.addEventListener("click", ()=> {
+        removeBtn.addEventListener("click", () => {
             const localProducts = getProductInLocalStorage();
             console.log(localProducts[i].id)
             console.log(localProducts[i].selectedColor)
-            const newBasket = localProducts.filter(p => p.id === localProducts[i].id && p.selectedColor !== localProducts[i].selectedColor || p.id !== localProducts[i].id );
+            const newBasket = localProducts.filter(p => p.id === localProducts[i].id && p.selectedColor !== localProducts[i].selectedColor || p.id !== localProducts[i].id);
             localStorage.setItem("product", JSON.stringify(newBasket));
-             displayBasket();
+            displayBasket();
         })
 
     }
@@ -98,9 +105,9 @@ const displayBasket = () => {
 // verification du contenu du panier avant de passer a la confirmation
 
 const btnConfirmation = document.getElementById("orderConfirmation");
-btnConfirmation.addEventListener("click",(e)=>{
+btnConfirmation.addEventListener("click", (e) => {
 
-    if(getProductInLocalStorage().length === 0){
+    if (getProductInLocalStorage().length === 0) {
         e.preventDefault();
         alert("votre pannier est vide merci d'ajouter un ou plusiuers articles")
     }
