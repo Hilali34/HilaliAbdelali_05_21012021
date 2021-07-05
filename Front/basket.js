@@ -54,7 +54,15 @@ const displayBasket = () => {
             localProducts[i].quantity = e.target.value;
 
             localStorage.setItem("product", JSON.stringify(localProducts));
+            console.log(input.value)
 
+            // supression de l'article en cas de saisie manuel de 0 dans l'input quantité
+
+            if (input.value === "0"){
+                const newBasket = localProducts.filter(p => p.id === localProducts[i].id && p.selectedColor !== localProducts[i].selectedColor || p.id !== localProducts[i].id);
+                localStorage.setItem("product", JSON.stringify(newBasket));
+                displayBasket();
+            }
             displayTotalArticleAndPrice()
         })
 

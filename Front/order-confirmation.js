@@ -27,7 +27,7 @@ const isCityValid = () => {
 
 // test Regex adresse
 const isAddressValid = () => {
-    const addressRegExp = new RegExp(/(^\d{1,}) [a-zA-Z0-9\s]+(\.)? [a-zA-Z]+$/);
+    const addressRegExp = new RegExp(/(^.{3,}$)/);
     const addressInput = document.querySelector("#form-order").address;
     console.log(addressInput)
     return addressRegExp.test(addressInput.value);
