@@ -4,7 +4,7 @@
 // Récuperation de l'id a partir de l'url
 
 const idOfSelection = new URLSearchParams(window.location.search).get("id")
-
+// console.log(idOfSelection)
 
 // Récupuration du produit par son id
 
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         })
     } else {
-        alert("selectionnez un article de la page d'acceuil");
+        alert("selectionnez un article sur la page d'acceuil");
 
     }
 })
@@ -88,7 +88,7 @@ const addBasket = (teddySelection) => {
         event.preventDefault()
         const productToAddToBasket = {
             id: teddySelection._id,
-            selectedColor: getColorsOption(),
+            selectedColor: getColorsOptionOfTeddy(),
             quantity: 1,
             object: teddySelection,
         }

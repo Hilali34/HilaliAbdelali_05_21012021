@@ -197,6 +197,12 @@ const postOrderInfo = () => {
     formSubmit.addEventListener("submit", (e) => {
         e.preventDefault();
 
+        if (isFormValid()) {
+
+            document.getElementById("form-order").submit();
+        }
+
+
         // creation objet a envoyer au serveur via fetch post
         const idOfProductsInLocalStorage = getProductInLocalStorage().map(p => p.id);
         console.log(idOfProductsInLocalStorage);
@@ -228,12 +234,7 @@ const postOrderInfo = () => {
             })
             .catch(error => console.log(error));
 
-        if (isFormValid()) {
-
-            document.getElementById("form-order").submit();
-        }
     })
-
 }
 
 

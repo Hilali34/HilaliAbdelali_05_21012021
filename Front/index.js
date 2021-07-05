@@ -16,6 +16,7 @@ const getTeddiesList = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     getTeddiesList().then(result => {
+        //console.log(result)
         result.forEach(teddy => {
             displayTeddies(teddy);
         })
