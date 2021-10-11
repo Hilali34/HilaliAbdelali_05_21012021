@@ -106,8 +106,16 @@ Chaque API contient 3 paramètres :
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![SASS](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)
+![JAVASCRIPT](https://img.shields.io/badge/Javascript-F4D03F?style=for-the-badge&logo=javascript&logoColor=white)
 ![GIT](https://img.shields.io/badge/Git-E34F26?style=for-the-badge&logo=git&logoColor=white)
+
+## Validation des données
+
+Pour les routes POST, l’objet contact envoyé au serveur doit contenir les champs firstName, lastName, address, city et email. Le tableau des produits envoyé au backend doit être un array de strings products. Les types de ces champs et leur présence doivent être validés avant l’envoi des données au serveur.
+
+## Repository GitHub à cloner
+https://github.com/OpenClassrooms-Student-Center/JWDP5.git
+
 ## Resultat: 
 
 Lien Page GitHub: 
