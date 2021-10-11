@@ -111,11 +111,6 @@ Pour les routes POST, l’objet contact envoyé au serveur doit contenir les cha
 ## Repository GitHub à cloner
 https://github.com/OpenClassrooms-Student-Center/JWDP5.git
 
-## Resultat: 
-
-Lien Page GitHub: 
-
-https://github.com/Hilali34/HilaliAbdelali_05_21012021
 
 ## Installation : 
 
