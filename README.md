@@ -1,9 +1,4 @@
-# HilaliAbdelali_05_21012021
-PROJET 5 ORINOCO
-instructions: 
-=> clôner le repository
-=> demarrer Node Server
-
+[![Openclassrooms](https://camo.githubusercontent.com/e47c349811ac404b8147bd362c598e61c7d20225df17499c6373b44f6ee08a3d/68747470733a2f2f31746f3170726f67726573732e66722f77702d636f6e74656e742f75706c6f6164732f323031392f30352f6f70656e636c617373726f6f6d732d65313535373736313233363135382e706e67)](https://openclassrooms.com/)
 
 # Parcours Développeur Web 
 # Projet 3 : Orinoco
@@ -120,4 +115,22 @@ https://github.com/OpenClassrooms-Student-Center/JWDP5.git
 
 Lien Page GitHub: 
 
-https://hilali34.github.io/HilaliAbdelali_05_21012021/
+https://github.com/Hilali34/HilaliAbdelali_05_21012021
+
+## Installation : 
+
+Clonez le repo
+
+```
+git clone https://github.com/Hilali34/HilaliAbdelali_05_21012021
+
+```
+
+Demarrez le serveur
+
+```
+Node Server
+
+```
+
+
