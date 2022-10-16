@@ -108,24 +108,46 @@ Chaque API contient 3 paramètres :
 
 Pour les routes POST, l’objet contact envoyé au serveur doit contenir les champs firstName, lastName, address, city et email. Le tableau des produits envoyé au backend doit être un array de strings products. Les types de ces champs et leur présence doivent être validés avant l’envoi des données au serveur.
 
-## Repository GitHub à cloner
-https://github.com/OpenClassrooms-Student-Center/JWDP5.git
+
 
 
 ## Installation : 
 
-Clonez le repo
+## Cloner le repo de l'API
+
+https://github.com/OpenClassrooms-Student-Center/JWDP5.git
+
+Lancer 
 
 ```
-git clone https://github.com/Hilali34/HilaliAbdelali_05_21012021
+nmp install
 
 ```
 
 Demarrez le serveur
 
 ```
-Node Server
+node Server
 
 ```
+
+Clonez le repo 
+
+```
+git clone https://github.com/Hilali34/HilaliAbdelali_05_21012021
+
+```
+
+Lancer le live server.
+
+DEMO:
+Demarrez le serveur
+
+```
+node Server
+
+https://orinoco-hilali.netlify.app
+
+
 
 
