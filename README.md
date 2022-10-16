@@ -127,7 +127,7 @@ nmp install
 Demarrez le serveur
 
 ```
-node Server
+node server.js
 
 ```
 
@@ -140,11 +140,8 @@ git clone https://github.com/Hilali34/HilaliAbdelali_05_21012021
 
 Lancer le live server.
 
-DEMO:
-Demarrez le serveur
 
-```
-node Server
+DEMO:
 
 https://orinoco-hilali.netlify.app
 
