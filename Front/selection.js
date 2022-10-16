@@ -10,7 +10,7 @@ const idOfSelection = new URLSearchParams(window.location.search).get("id")
 
 const getTeddyById = (id) => {
 
-    return fetch(` http://localhost:3000/api/teddies/${id}`)
+    return fetch(`${apiURL}/api/teddies/${id}`)
         .then(response => response.json())
         .catch(function (error) {
             alert("Une erreur s'est produite: " + error)

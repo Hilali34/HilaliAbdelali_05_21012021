@@ -221,7 +221,7 @@ const postOrderInfo = () => {
         console.log(order)
         console.log(idOfProductsInLocalStorage);
 
-        fetch("http://localhost:3000/api/teddies/order", {
+        fetch(`${apiURL}/api/teddies/order`, {
             method: "POST",
             body: JSON.stringify(order),
             headers: {

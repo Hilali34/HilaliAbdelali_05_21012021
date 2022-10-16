@@ -4,7 +4,7 @@
 // cette fonction recupère la liste des produits grace avec fetch GET
 
 const getTeddiesList = () => {
-    return fetch(" http://localhost:3000/api/teddies")
+    return fetch(`${apiURL}/api/teddies`)
         .then(response => response.json())
 
         .catch(function (error) {
